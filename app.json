@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Reactive Sweeper",
+    "description": "Minesweeper made with react native!",
+    "slug": "reactive-sweeper",
+    "privacy": "public",
+    "sdkVersion": "17.0.0",
+    "version": "1.0.0",
+    "icon": "icon.png"
+  }
+}
