@@ -50,8 +50,7 @@ export default class Field extends Component {
     const {onTapTile} = this.props;
     return (
       <View style={styles.tile}>
-        <TouchableOpacity onPress={() => onTapTile(i, j, false)}
-                          onLongPress={() => onTapTile(i, j, true)}>
+        <TouchableOpacity onPress={() => onTapTile(i, j, false)} onLongPress={() => onTapTile(i, j, true)}>
           {sprites[getSpriteNameForTile(tile)]}
         </TouchableOpacity>
       </View>

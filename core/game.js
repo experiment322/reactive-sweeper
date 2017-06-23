@@ -34,7 +34,8 @@ export default class Game extends Component {
   }
 
   tapTile(i, j, shouldFlag) {
-    const {field} = this.state;
+    const {field, state} = this.state;
+    if (state !== 'running') return;
     if (shouldFlag) {
       flagTile(i, j, field) && Game.notify('Flag toggled.');
     } else {

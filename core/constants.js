@@ -19,5 +19,5 @@ const gameScreenScale = Math.floor(Math.min(window.width, window.height) / (fiel
 
 export const gameScreenBasis = gameScreenScale * (fieldTiles * fieldTiles);
 
-export const scrollFactor = 100;
+export const scrollFactor = 64;
 export const scrollThreshold = gameScreenBasis / fieldTiles / 2;

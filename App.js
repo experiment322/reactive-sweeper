@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Game from './core/game';
 
-export default class App extends React.Component {
+export default class App extends Component {
   render() {
     return <Game/>;
   }

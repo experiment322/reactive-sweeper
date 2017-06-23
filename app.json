@@ -4,8 +4,14 @@
     "description": "Minesweeper made with react native!",
     "slug": "reactive-sweeper",
     "privacy": "public",
-    "sdkVersion": "17.0.0",
+    "sdkVersion": "18.0.0",
     "version": "1.0.0",
-    "icon": "icon.png"
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "icon": "./assets/icons/app.png",
+    "loading": {
+      "icon": "./assets/icons/loading.png",
+      "hideExponentText": true
+    }
   }
 }
