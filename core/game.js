@@ -50,14 +50,14 @@ export default class Game extends Component {
 
   updateGameState() {
     const {field} = this.state;
-    if (isFieldWon(field)) {
-      const playTime = Math.ceil((Date.now() - this.gameStartTime) / 1000);
-      Game.notify(`You did it in ${playTime} seconds!`);
-      this.setState({state: 'won'});
-    } else if (isFieldLost(field)) {
+    if (isFieldLost(field)) {
       const tilesLeft = field.tileCount - field.visibleTiles - field.mineCount + 1;
       Game.notify(`You lost with ${tilesLeft} tiles left to sweep!`);
       this.setState({state: 'lost'});
+    } else if (isFieldWon(field)) {
+      const playTime = Math.ceil((Date.now() - this.gameStartTime) / 1000);
+      Game.notify(`You did it in ${playTime} seconds!`);
+      this.setState({state: 'won'});
     }
   }
 

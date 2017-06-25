@@ -16,7 +16,7 @@ export default class Menu extends Component {
     const {selectedDifficulty, onDifficultyChange, onClickStart} = this.props;
     return (
       <View style={styles.menu}>
-        <Text style={styles.gameTitle}>REACTIVE SWEEPER v1.2.0</Text>
+        <Text style={styles.gameTitle}>REACTIVE SWEEPER v1.2.1</Text>
         <Picker style={styles.picker} selectedValue={selectedDifficulty} onValueChange={v => onDifficultyChange(v)}>
           {difficulties.map(d => <Picker.Item key={d} label={`${d} rows`} value={d}/>)}
         </Picker>
