@@ -18,6 +18,3 @@ const window = Dimensions.get('window');
 const gameScreenScale = Math.floor(Math.min(window.width, window.height) / (fieldTiles * fieldTiles));
 
 export const gameScreenBasis = gameScreenScale * (fieldTiles * fieldTiles);
-
-export const scrollFactor = 64;
-export const scrollThreshold = gameScreenBasis / fieldTiles / 2;

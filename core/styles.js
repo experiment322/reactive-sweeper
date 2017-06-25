@@ -19,20 +19,17 @@ export const styles = StyleSheet.create({
     backgroundColor: 'black'
   },
   field: {
-    flexWrap: 'wrap',
     flexBasis: gameScreenBasis,
     aspectRatio: 1,
-    flexDirection: 'row'
-  },
-  scrollBar: {
-    width: '1%',
-    zIndex: 1,
-    position: 'absolute',
-    backgroundColor: 'tomato'
+    backgroundColor: 'lavender'
   },
   tile: {
     flexBasis: gameScreenBasis / fieldTiles,
     aspectRatio: 1
+  },
+  tileRow: {
+    flexBasis: gameScreenBasis,
+    flexDirection: 'row'
   },
   gameTitle: {
     color: 'yellow',
