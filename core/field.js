@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {View, FlatList, TouchableOpacity} from 'react-native';
+import {View, FlatList} from 'react-native';
+import TouchableScale from 'react-native-touchable-scale';
 
 import {styles} from './styles';
 import {fieldTiles, gameScreenBasis} from './constants';
@@ -30,9 +31,11 @@ export default class Field extends Component {
     const {onTapTile} = this.props;
     return (
       <View key={j} style={styles.tile}>
-        <TouchableOpacity onPress={() => onTapTile(i, j, false)} onLongPress={() => onTapTile(i, j, true)}>
+        <TouchableScale activeScale={0.5}
+                        onPress={() => onTapTile(i, j, false)}
+                        onLongPress={() => onTapTile(i, j, true)}>
           {sprites[getSpriteNameForTile(tile)]}
-        </TouchableOpacity>
+        </TouchableScale>
       </View>
     );
   }
