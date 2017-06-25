@@ -24,6 +24,10 @@ export default class Game extends Component {
     ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.TOP);
   }
 
+  setDifficulty(rows) {
+    this.setState({preferences: {fieldRows: rows}});
+  }
+
   newGame() {
     const {preferences} = this.state;
     this.setState({field: [[]], state: 'loading'});
@@ -42,10 +46,6 @@ export default class Game extends Component {
       flipTiles(i, j, field) > tileFlipComboThreshold && Game.notify('Feeling lucky?');
     }
     this.setState({field});
-  }
-
-  setDifficulty(rows) {
-    this.setState({preferences: {fieldRows: rows}});
   }
 
   updateGameState() {
