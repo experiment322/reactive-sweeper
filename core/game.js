@@ -40,30 +40,32 @@ export default class Game extends Component {
   tapTile(i, j, shouldFlag) {
     const {field, state} = this.state;
     if (state !== 'running') return;
-    if (shouldFlag) {
-      flagTile(i, j, field) && Game.notify('Flag toggled.');
-    } else {
-      flipTiles(i, j, field) > tileFlipComboThreshold && Game.notify('Feeling lucky?');
-    }
-    this.setState({field});
-  }
-
-  updateGameState() {
-    const {field} = this.state;
-    if (isFieldLost(field)) {
-      const tilesLeft = field.tileCount - field.visibleTiles - field.mineCount + 1;
-      Game.notify(`You lost with ${tilesLeft} tiles left to sweep!`);
-      this.setState({state: 'lost'});
-    } else if (isFieldWon(field)) {
-      const playTime = Math.ceil((Date.now() - this.gameStartTime) / 1000);
-      Game.notify(`You did it in ${playTime} seconds!`);
-      this.setState({state: 'won'});
-    }
+    setTimeout(() => {
+      let flippedTiles = 0;
+      if (shouldFlag && flagTile(i, j, field)) {
+        Game.notify('Flag toggled.');
+        this.setState({field});
+      } else if (flippedTiles = flipTiles(i, j, field)) {
+        flippedTiles > tileFlipComboThreshold && Game.notify('Feeling lucky?');
+        this.setState({field});
+      }
+    });
   }
 
   componentDidUpdate() {
-    const {state} = this.state;
-    state === 'running' && this.updateGameState();
+    const {field, state} = this.state;
+    if (state !== 'running') return;
+    setTimeout(() => {
+      if (isFieldLost(field)) {
+        const tilesLeft = field.tileCount - field.visibleTiles - field.mineCount + 1;
+        Game.notify(`You lost with ${tilesLeft} tiles left to sweep!`);
+        this.setState({state: 'lost'});
+      } else if (isFieldWon(field)) {
+        const playTime = Math.ceil((Date.now() - this.gameStartTime) / 1000);
+        Game.notify(`You did it in ${playTime} seconds!`);
+        this.setState({state: 'won'});
+      }
+    });
   }
 
   render() {

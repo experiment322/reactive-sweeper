@@ -3,7 +3,7 @@ import {View, FlatList} from 'react-native';
 import TouchableScale from 'react-native-touchable-scale';
 
 import {styles} from './styles';
-import {fieldTiles, gameScreenBasis} from './constants';
+import {fieldTiles, fieldBasis} from './constants';
 import {sprites, getSpriteNameForTile} from './sprites';
 
 export default class Field extends Component {
@@ -14,8 +14,8 @@ export default class Field extends Component {
   static getRowLayout(data, index) {
     return {
       index,
-      length: gameScreenBasis / fieldTiles,
-      offset: gameScreenBasis / fieldTiles * index
+      length: fieldBasis / fieldTiles,
+      offset: fieldBasis / fieldTiles * index
     };
   }
 

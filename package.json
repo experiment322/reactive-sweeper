@@ -1,6 +1,6 @@
 {
   "name": "reactive-sweeper",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Minesweeper made with react native!",
   "author": "Alexandru Damian Manea <maneaalexdamian@gmail.com>",
   "private": true,

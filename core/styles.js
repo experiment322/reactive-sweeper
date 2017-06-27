@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-import {fieldTiles, gameScreenBasis} from './constants';
+import {tileBasis, fieldBasis} from './constants';
 
 const center = {alignItems: 'center', justifyContent: 'center'};
 const fullscreen = {width: '100%', height: '100%'};
@@ -19,17 +19,17 @@ export const styles = StyleSheet.create({
     backgroundColor: 'black'
   },
   field: {
-    flexBasis: gameScreenBasis,
+    flexBasis: fieldBasis,
     aspectRatio: 1,
     backgroundColor: 'lavender'
   },
-  tile: {
-    flexBasis: gameScreenBasis / fieldTiles,
-    aspectRatio: 1
-  },
   tileRow: {
-    flexBasis: gameScreenBasis,
+    flexBasis: fieldBasis,
     flexDirection: 'row'
+  },
+  tile: {
+    flexBasis: tileBasis,
+    aspectRatio: 1
   },
   gameTitle: {
     color: 'yellow',
