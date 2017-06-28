@@ -3,7 +3,7 @@ import {View, FlatList} from 'react-native';
 import TouchableScale from 'react-native-touchable-scale';
 
 import {styles} from './styles';
-import {fieldTiles, fieldBasis} from './constants';
+import {tileBasis} from './constants';
 import {sprites, getSpriteNameForTile} from './sprites';
 
 export default class Field extends Component {
@@ -14,8 +14,8 @@ export default class Field extends Component {
   static getRowLayout(data, index) {
     return {
       index,
-      length: fieldBasis / fieldTiles,
-      offset: fieldBasis / fieldTiles * index
+      length: tileBasis,
+      offset: tileBasis * index
     };
   }
 
@@ -31,7 +31,7 @@ export default class Field extends Component {
     const {onTapTile} = this.props;
     return (
       <View key={j} style={styles.tile}>
-        <TouchableScale activeScale={0.5}
+        <TouchableScale activeScale={0.7}
                         onPress={() => onTapTile(i, j, false)}
                         onLongPress={() => onTapTile(i, j, true)}>
           {sprites[getSpriteNameForTile(tile)]}

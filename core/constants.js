@@ -12,7 +12,6 @@ export const tileFlags = {
 
 export const fieldTiles = 10;
 export const difficulties = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-export const tileFlipComboThreshold = 100;
 
 const window = Dimensions.get('window');
 const tileSize = 10;

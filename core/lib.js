@@ -56,7 +56,7 @@ export function flagTile(i, j, f) {
   return false;
 }
 
-export function flipTiles(i, j, f) {
+export function flipTile(i, j, f) {
   const n = f.visibleTiles;
   if (!(f[i][j].flags & tileFlags.FV)) {
     f.visibleTiles++;
@@ -64,7 +64,7 @@ export function flipTiles(i, j, f) {
     if (f[i][j].flags & tileFlags.M) {
       f.isLost = true;
     } else if (!f[i][j].minesAround) {
-      applyAroundPointInField(i, j, f, flipTiles);
+      applyAroundPointInField(i, j, f, flipTile);
     }
     return f.visibleTiles - n;
   }
