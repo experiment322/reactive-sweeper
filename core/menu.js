@@ -7,15 +7,17 @@ import {styles} from './styles';
 import {difficulties} from './constants';
 
 export default class Menu extends Component {
-  helpTitle = 'How to play';
-  helpText =
+  static helpTitle =
+    'How to play';
+
+  static helpText =
     '* Short press to sweep.\n' +
     '* Long press to flag.\n' +
     '* Drag to scroll.\n' +
     '* Have fun!';
 
-  showHelp() {
-    Alert.alert(this.helpTitle, this.helpText);
+  static showHelp() {
+    Alert.alert(Menu.helpTitle, Menu.helpText);
   }
 
   componentDidMount() {
@@ -36,7 +38,7 @@ export default class Menu extends Component {
           <Button title='START' containerStyle={selectedDifficulty ? styles.menuButton : styles.disabledMenuButton}
                   style={styles.menuText} disabled={!selectedDifficulty} onPress={onClickStart}>START</Button>
           <Button title='HELP' containerStyle={styles.menuButton}
-                  style={styles.menuText} onPress={this.showHelp.bind(this)}>HELP</Button>
+                  style={styles.menuText} onPress={Menu.showHelp}>HELP</Button>
         </View>
       </View>
     );
