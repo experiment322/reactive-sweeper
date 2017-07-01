@@ -2,46 +2,83 @@ import {StyleSheet} from 'react-native';
 
 import {tileBasis, fieldBasis} from './constants';
 
-const center = {alignItems: 'center', justifyContent: 'center'};
-const fullscreen = {width: '100%', height: '100%'};
-const fullscreenAndCenter = {...fullscreen, ...center};
-
 export const styles = StyleSheet.create({
   screen: {
-    ...fullscreenAndCenter,
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: 'black'
   },
   menu: {
-    ...fullscreenAndCenter,
+    width: fieldBasis,
+    height: fieldBasis,
     zIndex: 1,
-    opacity: 0.7,
+    opacity: 0.8,
     position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     backgroundColor: 'black'
   },
   field: {
-    flexBasis: fieldBasis,
-    aspectRatio: 1,
+    width: fieldBasis,
+    height: fieldBasis,
     backgroundColor: 'lavender'
   },
   tileRow: {
-    flexBasis: fieldBasis,
+    width: fieldBasis,
     flexDirection: 'row'
   },
   tile: {
-    flexBasis: tileBasis,
-    aspectRatio: 1
+    width: tileBasis,
+    height: tileBasis
   },
   gameTitle: {
-    color: 'yellow',
-    fontSize: 16
+    color: 'olive',
+    fontSize: 24,
+    textShadowColor: 'crimson',
+    textShadowOffset: {width: 1, height: 1},
+    textShadowRadius: 4,
+    paddingHorizontal: 10
   },
-  picker: {
-    width: '50%',
-    backgroundColor: 'white'
+  menuButtonGroup: {
+    width: '100%',
+    height: '50%',
+    alignItems: 'center',
+    justifyContent: 'space-around'
   },
-  menuButtons: {
+  menuText: {
+    color: 'gold',
+    fontSize: 16,
+    lineHeight: 20,
+    fontWeight: 'normal',
+    backgroundColor: 'transparent',
+    textShadowColor: 'gray',
+    textShadowOffset: {width: 1, height: 1},
+    paddingHorizontal: 20
+  },
+  activeMenuText: {
+    color: 'gold',
+    fontSize: 16,
+    lineHeight: 20,
+    fontWeight: 'bold',
+    backgroundColor: 'gray',
+    textShadowColor: 'crimson',
+    textShadowOffset: {width: 1, height: 1},
+    paddingHorizontal: 20
+  },
+  menuButton: {
     width: '50%',
-    height: '25%',
-    justifyContent: 'space-between'
+    height: 20,
+    overflow: 'hidden',
+    borderRadius: 8,
+    backgroundColor: 'teal'
+  },
+  disabledMenuButton: {
+    width: '50%',
+    height: 20,
+    overflow: 'hidden',
+    borderRadius: 8,
+    backgroundColor: 'gray'
   }
 });

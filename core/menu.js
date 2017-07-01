@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import {View, Text, Button, Picker, Alert} from 'react-native';
+import {View, Text, Alert} from 'react-native';
+import Button from 'react-native-button';
+import ScrollingMenu from 'react-native-scrolling-menu';
 
 import {styles} from './styles';
 import {difficulties} from './constants';
@@ -7,22 +9,34 @@ import {difficulties} from './constants';
 export default class Menu extends Component {
   helpTitle = 'How to play';
   helpText =
-    '* Press on a tile to sweep it.\n' +
-    '* Long press on a tile to put a flag on it.\n' +
-    '* Drag to scroll the field.\n' +
+    '* Short press to sweep.\n' +
+    '* Long press to flag.\n' +
+    '* Drag to scroll.\n' +
     '* Have fun!';
 
+  showHelp() {
+    Alert.alert(this.helpTitle, this.helpText);
+  }
+
+  componentDidMount() {
+    const {onDifficultyChange} = this.props;
+    onDifficultyChange(-1);
+  }
+
   render() {
-    const {selectedDifficulty, onDifficultyChange, onClickStart} = this.props;
+    const {selectedDifficulty, onClickStart, onDifficultyChange} = this.props;
     return (
       <View style={styles.menu}>
-        <Text style={styles.gameTitle}>REACTIVE SWEEPER</Text>
-        <Picker style={styles.picker} selectedValue={selectedDifficulty} onValueChange={v => onDifficultyChange(v)}>
-          {difficulties.map(d => <Picker.Item key={d} label={`${d} rows`} value={d}/>)}
-        </Picker>
-        <View style={styles.menuButtons}>
-          <Button title='NEW GAME' onPress={onClickStart}/>
-          <Button title='?' onPress={() => Alert.alert(this.helpTitle, this.helpText)}/>
+        <View style={styles.menuButtonGroup}>
+          <Text style={styles.gameTitle}>REACTIVE SWEEPER</Text>
+        </View>
+        <View style={styles.menuButtonGroup}>
+          <ScrollingMenu items={difficulties} onSelect={onDifficultyChange} containerStyle={styles.menuButton}
+                         itemStyle={styles.menuText} selectedItemStyle={styles.activeMenuText}/>
+          <Button title='START' containerStyle={selectedDifficulty ? styles.menuButton : styles.disabledMenuButton}
+                  style={styles.menuText} disabled={!selectedDifficulty} onPress={onClickStart}>START</Button>
+          <Button title='HELP' containerStyle={styles.menuButton}
+                  style={styles.menuText} onPress={this.showHelp.bind(this)}>HELP</Button>
         </View>
       </View>
     );

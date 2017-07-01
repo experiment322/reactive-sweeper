@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Toast from 'react-native-root-toast';
 import {View, Alert, StatusBar, ActivityIndicator} from 'react-native';
+import Toast from 'react-native-root-toast';
 
 import Menu from './menu';
 import Field from './field';
@@ -14,8 +14,8 @@ export default class Game extends Component {
     this.state = {
       field: [[]],
       state: 'halt',
-      difficulty: difficulties[0],
-      gameStartTime: 0
+      difficulty: null,
+      gameStartTime: null
     };
   }
 
@@ -27,8 +27,10 @@ export default class Game extends Component {
     });
   }
 
-  setDifficulty(difficulty) {
-    this.setState({difficulty});
+  setDifficulty(index) {
+    this.setState({
+      difficulty: difficulties[index]
+    });
   }
 
   newGame() {
