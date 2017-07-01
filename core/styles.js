@@ -50,6 +50,8 @@ export const styles = StyleSheet.create({
   menuText: {
     color: 'gold',
     fontSize: 16,
+    overflow: 'hidden',
+    borderRadius: 8,
     lineHeight: 20,
     fontWeight: 'normal',
     backgroundColor: 'transparent',
@@ -60,6 +62,8 @@ export const styles = StyleSheet.create({
   activeMenuText: {
     color: 'gold',
     fontSize: 16,
+    overflow: 'hidden',
+    borderRadius: 8,
     lineHeight: 20,
     fontWeight: 'bold',
     backgroundColor: 'gray',
