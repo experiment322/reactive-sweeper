@@ -1,12 +1,17 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {View, FlatList} from 'react-native';
 import TouchableScale from 'react-native-touchable-scale';
 
 import {styles} from './styles';
-import {tileBasis} from './constants';
+import {tileBasis, fieldTiles} from './constants';
 import {sprites, getSpriteNameForTile} from './sprites';
 
-export default class Field extends Component {
+export default class Field extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.renderRow = this.renderRow.bind(this);
+  }
+
   static getRowKey(item, index) {
     return index;
   }
@@ -19,23 +24,19 @@ export default class Field extends Component {
     };
   }
 
-  renderRow({item: row, index: i}) {
-    return (
-      <View key={i} style={styles.tileRow}>
-        {row.map((tile, j) => this.renderTile(i, j, tile))}
-      </View>
-    );
-  }
-
-  renderTile(i, j, tile) {
+  renderRow({item, index: row}) {
     const {onTapTile} = this.props;
     return (
-      <View key={j} style={styles.tile}>
-        <TouchableScale activeScale={0.7}
-                        onPress={() => onTapTile(i, j, false)}
-                        onLongPress={() => onTapTile(i, j, true)}>
-          {sprites[getSpriteNameForTile(tile)]}
-        </TouchableScale>
+      <View key={row} style={styles.tileRow}>
+        {item.map((tile, column) => (
+          <View key={column} style={styles.tile}>
+            <TouchableScale activeScale={0.7}
+                            onPress={() => onTapTile(row, column, false)}
+                            onLongPress={() => onTapTile(row, column, true)}>
+              {sprites[getSpriteNameForTile(tile)]}
+            </TouchableScale>
+          </View>
+        ))}
       </View>
     );
   }
@@ -44,9 +45,8 @@ export default class Field extends Component {
     const {field} = this.props;
     return (
       <View style={styles.field}>
-        <FlatList initialNumToRender={0} windowSize={1}
-                  data={[...field]} renderItem={this.renderRow.bind(this)}
-                  keyExtractor={Field.getRowKey} getItemLayout={Field.getRowLayout}/>
+        <FlatList data={field.data} initialNumToRender={0} windowSize={1} maxToRenderPerBatch={fieldTiles}
+                  renderItem={this.renderRow} keyExtractor={Field.getRowKey} getItemLayout={Field.getRowLayout}/>
       </View>
     );
   }

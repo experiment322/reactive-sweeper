@@ -1,14 +1,22 @@
 import {tileFlags, fieldTiles} from './constants';
 
-function increaseMinesAroundTile(i, j, f) {
-  f[i][j].minesAround++;
+function increaseMineCountForTile(i, j, f) {
+  f.data[i][j].minesAround++;
 }
 
-function isPointValidForMine(i, j, f) {
-  return !(f[i][j].flags & tileFlags.M);
+function canFlipTile(i, j, f) {
+  return !(f.data[i][j].flags & tileFlags.FV);
 }
 
-function applyAroundPointInField(i, j, f, cb) {
+function canFlagTile(i, j, f) {
+  return !(f.data[i][j].flags & tileFlags.V);
+}
+
+function isTileMined(i, j, f) {
+  return !!(f.data[i][j].flags & tileFlags.M);
+}
+
+function applyAroundTile(i, j, f, cb) {
   for (let ii = Math.max(0, i - 1); ii <= Math.min(f.rows - 1, i + 1); ++ii) {
     for (let jj = Math.max(0, j - 1); jj <= Math.min(f.columns - 1, j + 1); ++jj) {
       if (ii !== i || jj !== j) cb(ii, jj, f);
@@ -16,59 +24,69 @@ function applyAroundPointInField(i, j, f, cb) {
   }
 }
 
-function getRandomPointInFieldIfTrue(f, cb) {
+function recursivelyFlipTiles(i, j, f) {
+  if (canFlipTile(i, j, f)) {
+    f.visibleTiles++;
+    f.data[i][j].flags |= tileFlags.V;
+    if (isTileMined(i, j, f)) {
+      f.isLost = true;
+    } else if (!f.data[i][j].minesAround) {
+      applyAroundTile(i, j, f, recursivelyFlipTiles);
+    }
+  }
+}
+
+function getRandomTileIfCallbackReturnsValue(f, cb, rv) {
   let i, j;
   do {
     i = Math.floor(Math.random() * f.rows) % f.rows;
     j = Math.floor(Math.random() * f.columns) % f.columns;
-  } while (!cb(i, j, f));
+  } while (cb(i, j, f) !== rv);
   return {i, j};
 }
 
 export function createField(r) {
-  const f = [];
-  f.rows = r;
-  f.isLost = false;
-  f.columns = fieldTiles;
-  f.tileCount = r * fieldTiles;
-  f.visibleTiles = 0;
+  const f = {
+    data: [],
+    rows: Number(r),
+    isLost: false,
+    columns: Number(fieldTiles),
+    tileCount: Number(r) * Number(fieldTiles),
+    mineCount: 0,
+    visibleTiles: 0
+  };
   for (let i = 0; i < f.rows; ++i) {
-    f[i] = [];
+    f.data[i] = [];
     for (let j = 0; j < f.columns; ++j) {
-      f[i][j] = {flags: 0, minesAround: 0};
+      f.data[i][j] = {flags: 0, minesAround: 0};
     }
   }
-  const mineFactor = Math.floor(Math.sqrt(fieldTiles));
+  const mineFactor = Math.floor(Math.sqrt(f.columns));
   f.mineCount = Math.ceil(f.rows / mineFactor) * Math.ceil(f.columns / mineFactor);
   for (let m = 0; m < f.mineCount; ++m) {
-    const p = getRandomPointInFieldIfTrue(f, isPointValidForMine);
-    applyAroundPointInField(p.i, p.j, f, increaseMinesAroundTile);
-    f[p.i][p.j].flags |= tileFlags.M;
+    const p = getRandomTileIfCallbackReturnsValue(f, isTileMined, false);
+    f.data[p.i][p.j].flags |= tileFlags.M;
+    applyAroundTile(p.i, p.j, f, increaseMineCountForTile);
   }
   return f;
 }
 
 export function flagTile(i, j, f) {
-  if (!(f[i][j].flags & tileFlags.V)) {
-    f[i][j].flags ^= tileFlags.F;
-    return true;
+  if (canFlagTile(i, j, f)) {
+    const nf = JSON.parse(JSON.stringify(f));
+    nf.data[i][j].flags ^= tileFlags.F;
+    return nf;
   }
-  return false;
+  return f;
 }
 
 export function flipTile(i, j, f) {
-  const n = f.visibleTiles;
-  if (!(f[i][j].flags & tileFlags.FV)) {
-    f.visibleTiles++;
-    f[i][j].flags |= tileFlags.V;
-    if (f[i][j].flags & tileFlags.M) {
-      f.isLost = true;
-    } else if (!f[i][j].minesAround) {
-      applyAroundPointInField(i, j, f, flipTile);
-    }
-    return f.visibleTiles - n;
+  if (canFlipTile(i, j, f)) {
+    const nf = JSON.parse(JSON.stringify(f));
+    recursivelyFlipTiles(i, j, nf);
+    return nf;
   }
-  return false;
+  return f;
 }
 
 export function isFieldWon(f) {

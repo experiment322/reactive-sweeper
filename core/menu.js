@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {View, Text, Alert} from 'react-native';
 import Button from 'react-native-button';
 import ScrollingMenu from 'react-native-scrolling-menu';
@@ -6,7 +6,7 @@ import ScrollingMenu from 'react-native-scrolling-menu';
 import {styles} from './styles';
 import {difficulties} from './constants';
 
-export default class Menu extends Component {
+export default class Menu extends PureComponent {
   static helpTitle =
     'How to play';
 

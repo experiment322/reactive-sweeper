@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {View, Alert, StatusBar, ActivityIndicator} from 'react-native';
 import Toast from 'react-native-root-toast';
 
@@ -8,15 +8,18 @@ import {styles} from './styles';
 import {difficulties} from './constants';
 import {createField, flipTile, flagTile, isFieldLost, isFieldWon} from './lib';
 
-export default class Game extends Component {
+export default class Game extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      field: [[]],
+      field: {},
       state: 'halt',
       difficulty: null,
       gameStartTime: null
     };
+    this.tapTile = this.tapTile.bind(this);
+    this.newGame = this.newGame.bind(this);
+    this.setDifficulty = this.setDifficulty.bind(this);
   }
 
   static notify(msg) {
@@ -28,15 +31,13 @@ export default class Game extends Component {
   }
 
   setDifficulty(index) {
-    this.setState({
-      difficulty: difficulties[index]
-    });
+    this.setState({difficulty: difficulties[index]});
   }
 
   newGame() {
     const {difficulty} = this.state;
     this.setState({
-      field: [[]],
+      field: {},
       state: 'loading'
     });
     window.requestAnimationFrame(() => {
@@ -52,18 +53,21 @@ export default class Game extends Component {
     const {field, state} = this.state;
     if (state !== 'running') return;
     window.requestAnimationFrame(() => {
-      if (shouldFlag && flagTile(i, j, field) || flipTile(i, j, field)) {
-        shouldFlag && Game.notify('Flag toggled.');
-        this.setState({field});
+      if (shouldFlag) {
+        this.setState({field: flagTile(i, j, field)});
+      } else {
+        this.setState({field: flipTile(i, j, field)});
       }
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     const {field, state, gameStartTime} = this.state;
     if (state !== 'running') return;
     window.requestAnimationFrame(() => {
-      if (isFieldLost(field)) {
+      if (prevState.field.visibleTiles === field.visibleTiles) {
+        Game.notify('Flag toggled.');
+      } else if (isFieldLost(field)) {
         const tilesLeft = field.tileCount - field.visibleTiles - field.mineCount + 1;
         Alert.alert('Game lost', `You lost with ${tilesLeft} tiles left to sweep!`);
         this.setState({state: 'lost'});
@@ -84,13 +88,10 @@ export default class Game extends Component {
           <ActivityIndicator size='large'/>
         )}
         {['running', 'won', 'lost'].includes(state) && (
-          <Field field={field}
-                 onTapTile={this.tapTile.bind(this)}/>
+          <Field field={field} onTapTile={this.tapTile}/>
         )}
         {['halt', 'won', 'lost'].includes(state) && (
-          <Menu onClickStart={this.newGame.bind(this)}
-                selectedDifficulty={difficulty}
-                onDifficultyChange={this.setDifficulty.bind(this)}/>
+          <Menu selectedDifficulty={difficulty} onClickStart={this.newGame} onDifficultyChange={this.setDifficulty}/>
         )}
       </View>
     );
