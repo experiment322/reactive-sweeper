@@ -20,25 +20,33 @@ export default class Menu extends PureComponent {
     Alert.alert(Menu.helpTitle, Menu.helpText);
   }
 
-  componentDidMount() {
-    const {onDifficultyChange} = this.props;
-    onDifficultyChange(-1);
-  }
-
   render() {
     const {selectedDifficulty, onClickStart, onDifficultyChange} = this.props;
     return (
       <View style={styles.menu}>
-        <View style={styles.menuButtonGroup}>
+        <View style={styles.menuSection}>
           <Text style={styles.gameTitle}>REACTIVE SWEEPER</Text>
         </View>
-        <View style={styles.menuButtonGroup}>
-          <ScrollingMenu items={difficulties} onSelect={onDifficultyChange} containerStyle={styles.menuButton}
-                         itemStyle={styles.menuText} selectedItemStyle={styles.activeMenuText}/>
-          <Button title='START' containerStyle={selectedDifficulty ? styles.menuButton : styles.disabledMenuButton}
-                  style={styles.menuText} disabled={!selectedDifficulty} onPress={onClickStart}>START</Button>
-          <Button title='HELP' containerStyle={styles.menuButton}
-                  style={styles.menuText} onPress={Menu.showHelp}>HELP</Button>
+        <View style={styles.menuSection}>
+          <ScrollingMenu items={difficulties}
+                         onSelect={onDifficultyChange}
+                         itemStyle={styles.menuText}
+                         defaultIndex={selectedDifficulty}
+                         containerStyle={styles.menuButton}
+                         selectedItemStyle={styles.activeMenuText}/>
+          <Button title='START'
+                  style={styles.menuText}
+                  onPress={onClickStart}
+                  disabled={!(selectedDifficulty in difficulties)}
+                  containerStyle={selectedDifficulty in difficulties ? styles.menuButton : styles.disabledMenuButton}>
+            START
+          </Button>
+          <Button title='HELP'
+                  style={styles.menuText}
+                  onPress={Menu.showHelp}
+                  containerStyle={styles.menuButton}>
+            HELP
+          </Button>
         </View>
       </View>
     );

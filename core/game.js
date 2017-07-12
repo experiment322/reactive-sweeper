@@ -31,7 +31,7 @@ export default class Game extends PureComponent {
   }
 
   setDifficulty(index) {
-    this.setState({difficulty: difficulties[index]});
+    this.setState({difficulty: index});
   }
 
   newGame() {
@@ -42,7 +42,7 @@ export default class Game extends PureComponent {
     });
     window.requestAnimationFrame(() => {
       this.setState({
-        field: createField(difficulty),
+        field: createField(difficulties[difficulty]),
         state: 'running',
         gameStartTime: Date.now()
       });

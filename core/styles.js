@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     width: fieldBasis,
     height: fieldBasis,
     zIndex: 1,
-    opacity: 0.8,
+    opacity: 0.9,
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'space-around',
@@ -41,48 +41,40 @@ export const styles = StyleSheet.create({
     textShadowRadius: 4,
     paddingHorizontal: 10
   },
-  menuButtonGroup: {
+  menuSection: {
+    flex: 1,
     width: '100%',
-    height: '50%',
     alignItems: 'center',
     justifyContent: 'space-around'
   },
   menuText: {
     color: 'gold',
-    fontSize: 16,
-    overflow: 'hidden',
-    borderRadius: 8,
-    lineHeight: 20,
+    fontSize: 24,
+    lineHeight: 32,
     fontWeight: 'normal',
     backgroundColor: 'transparent',
     textShadowColor: 'gray',
     textShadowOffset: {width: 1, height: 1},
-    paddingHorizontal: 20
+    paddingHorizontal: 32
   },
   activeMenuText: {
     color: 'gold',
-    fontSize: 16,
-    overflow: 'hidden',
-    borderRadius: 8,
-    lineHeight: 20,
+    fontSize: 24,
+    lineHeight: 32,
     fontWeight: 'bold',
     backgroundColor: 'gray',
     textShadowColor: 'crimson',
     textShadowOffset: {width: 1, height: 1},
-    paddingHorizontal: 20
+    paddingHorizontal: 32
   },
   menuButton: {
-    width: '50%',
-    height: 20,
-    overflow: 'hidden',
-    borderRadius: 8,
+    width: '64%',
+    height: 32,
     backgroundColor: 'teal'
   },
   disabledMenuButton: {
-    width: '50%',
-    height: 20,
-    overflow: 'hidden',
-    borderRadius: 8,
+    width: '64%',
+    height: 32,
     backgroundColor: 'gray'
   }
 });
