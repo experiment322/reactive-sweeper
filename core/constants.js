@@ -11,6 +11,7 @@ export const tileFlags = {
 };
 
 export const fieldTiles = 10;
+export const percentages = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90];
 export const difficulties = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
 const window = Dimensions.get('window');

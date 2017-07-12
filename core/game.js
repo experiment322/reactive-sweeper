@@ -5,7 +5,7 @@ import Toast from 'react-native-root-toast';
 import Menu from './menu';
 import Field from './field';
 import {styles} from './styles';
-import {difficulties} from './constants';
+import {percentages, difficulties} from './constants';
 import {createField, flipTile, flagTile, isFieldLost, isFieldWon} from './lib';
 
 export default class Game extends PureComponent {
@@ -14,11 +14,13 @@ export default class Game extends PureComponent {
     this.state = {
       field: {},
       state: 'halt',
+      percentage: null,
       difficulty: null,
       gameStartTime: null
     };
     this.tapTile = this.tapTile.bind(this);
     this.newGame = this.newGame.bind(this);
+    this.setPercentage = this.setPercentage.bind(this);
     this.setDifficulty = this.setDifficulty.bind(this);
   }
 
@@ -30,19 +32,23 @@ export default class Game extends PureComponent {
     });
   }
 
+  setPercentage(index) {
+    this.setState({percentage: index});
+  }
+
   setDifficulty(index) {
     this.setState({difficulty: index});
   }
 
   newGame() {
-    const {difficulty} = this.state;
+    const {percentage, difficulty} = this.state;
     this.setState({
       field: {},
       state: 'loading'
     });
     window.requestAnimationFrame(() => {
       this.setState({
-        field: createField(difficulties[difficulty]),
+        field: createField(difficulties[difficulty], percentages[percentage]),
         state: 'running',
         gameStartTime: Date.now()
       });
@@ -80,7 +86,7 @@ export default class Game extends PureComponent {
   }
 
   render() {
-    const {state, field, difficulty} = this.state;
+    const {field, state, percentage, difficulty} = this.state;
     return (
       <View style={styles.screen}>
         <StatusBar hidden/>
@@ -91,7 +97,8 @@ export default class Game extends PureComponent {
           <Field field={field} onTapTile={this.tapTile}/>
         )}
         {['halt', 'won', 'lost'].includes(state) && (
-          <Menu selectedDifficulty={difficulty} onClickStart={this.newGame} onDifficultyChange={this.setDifficulty}/>
+          <Menu selectedDifficulty={difficulty} selectedPercentage={percentage} onClickStart={this.newGame}
+                onDifficultyChange={this.setDifficulty} onPercentageChange={this.setPercentage}/>
         )}
       </View>
     );

@@ -9,11 +9,15 @@ function canFlipTile(i, j, f) {
 }
 
 function canFlagTile(i, j, f) {
-  return !(f.data[i][j].flags & tileFlags.V);
+  return !!(f.visibleTiles) && !(f.data[i][j].flags & tileFlags.V);
 }
 
 function isTileMined(i, j, f) {
   return !!(f.data[i][j].flags & tileFlags.M);
+}
+
+function isTileAroundTile(i, j, ii, jj) {
+  return Math.abs(ii - i) < 2 && Math.abs(jj - j) < 2;
 }
 
 function applyAroundTile(i, j, f, cb) {
@@ -45,14 +49,23 @@ function getRandomTileIfCallbackReturnsValue(f, cb, rv) {
   return {i, j};
 }
 
-export function createField(r) {
+function placeMines(i, j, f) {
+  const canPlaceMineAt = ((ii, jj, ff) => !isTileMined(ii, jj, ff) && !isTileAroundTile(i, j, ii, jj));
+  for (let m = 0; m < f.mineCount; ++m) {
+    const p = getRandomTileIfCallbackReturnsValue(f, canPlaceMineAt, true);
+    applyAroundTile(p.i, p.j, f, increaseMineCountForTile);
+    f.data[p.i][p.j].flags = tileFlags.M;
+  }
+}
+
+export function createField(r, p) {
   const f = {
     data: [],
     rows: Number(r),
     isLost: false,
     columns: Number(fieldTiles),
     tileCount: Number(r) * Number(fieldTiles),
-    mineCount: 0,
+    mineCount: Math.floor(Number(r) * Number(fieldTiles) / 100 * Number(p)),
     visibleTiles: 0
   };
   for (let i = 0; i < f.rows; ++i) {
@@ -60,13 +73,6 @@ export function createField(r) {
     for (let j = 0; j < f.columns; ++j) {
       f.data[i][j] = {flags: 0, minesAround: 0};
     }
-  }
-  const mineFactor = Math.floor(Math.sqrt(f.columns));
-  f.mineCount = Math.ceil(f.rows / mineFactor) * Math.ceil(f.columns / mineFactor);
-  for (let m = 0; m < f.mineCount; ++m) {
-    const p = getRandomTileIfCallbackReturnsValue(f, isTileMined, false);
-    f.data[p.i][p.j].flags |= tileFlags.M;
-    applyAroundTile(p.i, p.j, f, increaseMineCountForTile);
   }
   return f;
 }
@@ -83,6 +89,7 @@ export function flagTile(i, j, f) {
 export function flipTile(i, j, f) {
   if (canFlipTile(i, j, f)) {
     const nf = JSON.parse(JSON.stringify(f));
+    if (!nf.visibleTiles) placeMines(i, j, nf);
     recursivelyFlipTiles(i, j, nf);
     return nf;
   }

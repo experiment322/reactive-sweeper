@@ -68,12 +68,12 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 32
   },
   menuButton: {
-    width: '64%',
+    width: '90%',
     height: 32,
     backgroundColor: 'teal'
   },
   disabledMenuButton: {
-    width: '64%',
+    width: '90%',
     height: 32,
     backgroundColor: 'gray'
   }

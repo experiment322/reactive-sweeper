@@ -4,9 +4,15 @@ import Button from 'react-native-button';
 import ScrollingMenu from 'react-native-scrolling-menu';
 
 import {styles} from './styles';
-import {difficulties} from './constants';
+import {percentages, difficulties} from './constants';
 
 export default class Menu extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.percentages = percentages.map(i => `${i}% MINES`);
+    this.difficulties = difficulties.map(i => `${i} LINES`);
+  }
+
   static helpTitle =
     'How to play';
 
@@ -21,24 +27,33 @@ export default class Menu extends PureComponent {
   }
 
   render() {
-    const {selectedDifficulty, onClickStart, onDifficultyChange} = this.props;
+    const {selectedPercentage, selectedDifficulty, onClickStart, onPercentageChange, onDifficultyChange} = this.props;
+    const canStartGame = selectedPercentage in percentages && selectedDifficulty in difficulties;
     return (
       <View style={styles.menu}>
         <View style={styles.menuSection}>
           <Text style={styles.gameTitle}>REACTIVE SWEEPER</Text>
         </View>
         <View style={styles.menuSection}>
-          <ScrollingMenu items={difficulties}
+          <ScrollingMenu items={this.difficulties}
                          onSelect={onDifficultyChange}
                          itemStyle={styles.menuText}
                          defaultIndex={selectedDifficulty}
                          containerStyle={styles.menuButton}
                          selectedItemStyle={styles.activeMenuText}/>
+          <ScrollingMenu items={this.percentages}
+                         onSelect={onPercentageChange}
+                         itemStyle={styles.menuText}
+                         defaultIndex={selectedPercentage}
+                         containerStyle={styles.menuButton}
+                         selectedItemStyle={styles.activeMenuText}/>
+        </View>
+        <View style={styles.menuSection}>
           <Button title='START'
                   style={styles.menuText}
                   onPress={onClickStart}
-                  disabled={!(selectedDifficulty in difficulties)}
-                  containerStyle={selectedDifficulty in difficulties ? styles.menuButton : styles.disabledMenuButton}>
+                  disabled={!canStartGame}
+                  containerStyle={canStartGame ? styles.menuButton : styles.disabledMenuButton}>
             START
           </Button>
           <Button title='HELP'
