@@ -12,6 +12,12 @@
     "loading": {
       "icon": "./assets/icons/loading.png",
       "hideExponentText": true
+    },
+    "ios": {
+      "bundleIdentifier": "com.mad.reactivesweeper"
+    },
+    "android": {
+      "package": "com.mad.reactivesweeper"
     }
   }
 }
