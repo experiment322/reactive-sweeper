@@ -14,7 +14,6 @@ export const styles = StyleSheet.create({
     width: fieldBasis,
     height: fieldBasis,
     zIndex: 1,
-    opacity: 0.9,
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'space-around',
@@ -35,15 +34,16 @@ export const styles = StyleSheet.create({
   },
   gameTitle: {
     color: 'olive',
-    fontSize: 24,
+    fontSize: 32,
+    textAlign: 'center',
     textShadowColor: 'crimson',
     textShadowOffset: {width: 1, height: 1},
     textShadowRadius: 4,
     paddingHorizontal: 10
   },
   menuSection: {
-    flex: 1,
     width: '100%',
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'space-around'
   },

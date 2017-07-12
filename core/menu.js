@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {View, Text, Alert} from 'react-native';
+import {View, Text, Alert, Animated} from 'react-native';
 import Button from 'react-native-button';
 import ScrollingMenu from 'react-native-scrolling-menu';
 
@@ -9,8 +9,13 @@ import {percentages, difficulties} from './constants';
 export default class Menu extends PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+      fadeAnim: new Animated.Value(1)
+    };
     this.percentages = percentages.map(i => `${i}% MINES`);
     this.difficulties = difficulties.map(i => `${i} LINES`);
+    this.fadeMenu = this.fadeMenu.bind(this);
+    this.revealMenu = this.revealMenu.bind(this);
   }
 
   static helpTitle =
@@ -26,12 +31,30 @@ export default class Menu extends PureComponent {
     Alert.alert(Menu.helpTitle, Menu.helpText);
   }
 
+  fadeMenu() {
+    Animated.timing(this.state.fadeAnim, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: true
+    }).start();
+    return true;
+  }
+
+  revealMenu() {
+    Animated.timing(this.state.fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true
+    }).start();
+    return true;
+  }
+
   render() {
     const {selectedPercentage, selectedDifficulty, onClickStart, onPercentageChange, onDifficultyChange} = this.props;
     const canStartGame = selectedPercentage in percentages && selectedDifficulty in difficulties;
     return (
-      <View style={styles.menu}>
-        <View style={styles.menuSection}>
+      <Animated.View style={[styles.menu, {opacity: this.state.fadeAnim}]}>
+        <View style={styles.menuSection} onStartShouldSetResponder={this.fadeMenu} onResponderRelease={this.revealMenu}>
           <Text style={styles.gameTitle}>REACTIVE SWEEPER</Text>
         </View>
         <View style={styles.menuSection}>
@@ -63,7 +86,7 @@ export default class Menu extends PureComponent {
             HELP
           </Button>
         </View>
-      </View>
+      </Animated.View>
     );
   }
 }
