@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native'
 
-import {tileBasis, fieldBasis} from './constants';
+import { fieldBasis, tileBasis } from './constants'
 
 export const styles = StyleSheet.create({
   screen: {
@@ -36,10 +36,12 @@ export const styles = StyleSheet.create({
     color: 'olive',
     fontSize: 32,
     textAlign: 'center',
+    fontWeight: 'normal',
+    fontFamily: 'Audiowide',
     textShadowColor: 'crimson',
     textShadowOffset: {width: 1, height: 1},
     textShadowRadius: 4,
-    paddingHorizontal: 10
+    paddingHorizontal: 16
   },
   menuSection: {
     width: '100%',
@@ -52,20 +54,22 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     lineHeight: 32,
     fontWeight: 'normal',
+    fontFamily: 'Orbitron',
     backgroundColor: 'transparent',
     textShadowColor: 'gray',
     textShadowOffset: {width: 1, height: 1},
-    paddingHorizontal: 32
+    paddingHorizontal: 16
   },
   activeMenuText: {
     color: 'gold',
     fontSize: 24,
     lineHeight: 32,
-    fontWeight: 'bold',
+    fontWeight: 'normal',
+    fontFamily: 'Orbitron',
     backgroundColor: 'gray',
     textShadowColor: 'crimson',
     textShadowOffset: {width: 1, height: 1},
-    paddingHorizontal: 32
+    paddingHorizontal: 16
   },
   menuButton: {
     width: '90%',
@@ -77,4 +81,4 @@ export const styles = StyleSheet.create({
     height: 32,
     backgroundColor: 'gray'
   }
-});
+})

@@ -1,17 +1,20 @@
 {
   "name": "reactive-sweeper",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "Minesweeper made with react native!",
   "author": "Alexandru Damian Manea <maneaalexdamian@gmail.com>",
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
-    "expo": "^18.0.2",
+    "expo": "^19.0.0",
     "react": "16.0.0-alpha.12",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-18.0.1.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-19.0.0.tar.gz",
     "react-native-button": "^2.0.0",
     "react-native-root-toast": "^1.1.2",
     "react-native-scrolling-menu": "github:experiment322/react-native-scrolling-menu",
     "react-native-touchable-scale": "^1.1.0"
+  },
+  "devDependencies": {
+    "standard": "^10.0.2"
   }
 }
