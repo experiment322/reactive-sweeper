@@ -1,10 +1,8 @@
 {
   "name": "reactive-sweeper",
-  "version": "1.5.0",
   "description": "Minesweeper made with react native!",
+  "version": "1.5.0",
   "author": "Alexandru Damian Manea <maneaalexdamian@gmail.com>",
-  "private": true,
-  "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
     "expo": "^19.0.0",
     "react": "16.0.0-alpha.12",
@@ -16,5 +14,7 @@
   },
   "devDependencies": {
     "standard": "^10.0.2"
-  }
+  },
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true
 }

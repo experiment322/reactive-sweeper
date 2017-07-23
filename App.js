@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { AppLoading, Asset, Font } from 'expo'
-import Game from './core/game'
+import Game from './app/game'
 
 export default class App extends PureComponent {
   constructor (props) {
